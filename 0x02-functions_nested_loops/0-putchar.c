@@ -3,7 +3,7 @@
 /**
  * main - print _putchar
  * is written by ola
- * Return: 0
+ * Return: Always 0 (Success)
  */
 int main(void)
 {
