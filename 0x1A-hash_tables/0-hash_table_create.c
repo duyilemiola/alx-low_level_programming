@@ -1,48 +1,32 @@
-#ifndef _HASH_TABLES_H_
-#define _HASH_TABLES_H_
-
-
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+#include "hash_tables.h"
 
 /**
- * struct hash_node_s - Node of a hash table
+ * hash_table_create - Creates a hash table.
+ * @size: the size, in number of nodes, to make the new hash table.
  *
- * @key: The key, string
- * The key is unique in the HashTable
- * @value: The value corresponding to a key
- * @next: A pointer to the next node of the List
+ * Return: a pointer to the newly created hash table.
  */
-typedef struct hash_node_s
+hash_table_t *hash_table_create(unsigned long int size)
 {
-	char *key;
-	char *value;
-	struct hash_node_s *next;
-} hash_node_t;
+	unsigned int i = 0;
+	hash_table_t *ht = malloc(sizeof(hash_table_t));
 
-/**
- * struct hash_table_s - Hash table data structure
- *
- * @size: The size of the array
- * @array: An array of size @size
- * Each cell of this array is a pointer to the first node of a linked list,
- * because we want our HashTable to use a Chaining collision handling
- */
-typedef struct hash_table_s
-{
-	unsigned long int size;
-	hash_node_t **array;
-} hash_table_t;
+	if (ht == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		return (NULL);
+	}
 
-hash_table_t *hash_table_create(unsigned long int size);
-unsigned long int hash_djb2(const unsigned char *str);
-unsigned long int key_index(const unsigned char *key, unsigned long int size);
-hash_node_t *create_new_node (const char *key, const char *value);
-int hash_table_set(hash_table_t *ht, const char *key, const char *value);
-char *hash_table_get(const hash_table_t *ht, const char *key);
-void hash_table_print(const hash_table_t *ht);
-void hash_table_delete(hash_table_t *ht);
-void free_hash_list(hash_node_t *head);
+	ht->size = size;
+	ht->array = malloc(sizeof(hash_node_t *) * size);
+	if (ht->array == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		return (NULL);
+	}
 
-#endif
+	for (; i < size; i++)
+		ht->array[i] = NULL;
+
+	return (ht);
+}
