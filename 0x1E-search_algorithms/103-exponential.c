@@ -1,7 +1,7 @@
 #include "search_algos.h"
 
 /**
- * recursive_search - searches for a value in an array of
+ * exponential_search - searches for a value in an array of
  * integers using the Binary search algorithm
  *
  *
@@ -32,11 +32,11 @@ int exponential_search(int *array, size_t size, int value)
 		return ((int)half);
 
 	if (value < array[half])
-		return (recursive_search(array, half, value));
+		return (exponential_search(array, half, value));
 
 	half++;
 
-	return (recursive_search(array + half, size - half, value) + half);
+	return (exponential_search(array + half, size - half, value) + half);
 }
 
 /**
@@ -52,7 +52,7 @@ int binary_search(int *array, size_t size, int value)
 {
 	int index;
 
-	index = recursive_search(array, size, value);
+	index = exponential_search(array, size, value);
 
 	if (index >= 0 && array[index] != value)
 		return (-1);
